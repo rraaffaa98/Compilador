@@ -1,0 +1,11 @@
+printf "Digite um numero:"
+read %r0
+mov %t0, %r0
+mov %t1, 0
+greater %t2, %t0, %t1
+jf %t2, L0
+printf "O número é positivo"
+jump L1
+label L0
+printf "O número é negativo"
+label L1

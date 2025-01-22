@@ -1,0 +1,1554 @@
+Gramática
+
+    0 $accept: listacomando $end
+
+    1 listacomando: comando listacomando
+    2             | comando
+
+    3 comando: atrib
+    4        | printf
+    5        | while
+    6        | for
+    7        | scanf
+    8        | if
+    9        | bloco
+   10        | declaracao
+
+   11 atrib: ID ATRIB expr PEV
+   12      | ID LCOL expr RCOL ATRIB expr PEV
+   13      | ID MAIS MAIS PEV
+
+   14 expr: expr MAIS termo
+   15     | expr MENOS termo
+   16     | termo
+
+   17 termo: termo DIV fator
+   18      | termo MULT fator
+   19      | termo MOD fator
+   20      | fator
+
+   21 fator: ID
+   22      | NUM
+   23      | MENOS NUM
+   24      | LPAR expr RPAR
+   25      | ID LCOL expr RCOL
+
+   26 printf: PRINTF LPAR expr RPAR PEV
+   27       | PRINTF LPAR STRING RPAR PEV
+
+   28 $@1: ε
+
+   29 $@2: ε
+
+   30 while: WHILE $@1 LPAR cond $@2 RPAR bloco
+
+   31 cond: cond AND condTermo
+   32     | condTermo
+
+   33 condTermo: condTermo OR condFator
+   34          | condFator
+
+   35 condFator: NOT condSimp
+   36          | condSimp
+
+   37 condSimp: expr MENOR expr
+   38         | expr MAIOR expr
+   39         | expr MAIORIGUAL expr
+   40         | expr MENORIGUAL expr
+   41         | expr DIF expr
+   42         | expr IGUAL expr
+   43         | LPAR cond RPAR
+
+   44 $@3: ε
+
+   45 $@4: ε
+
+   46 $@5: ε
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 cond $@5 RPAR bloco
+
+   48 scanf: SCANF LPAR ID RPAR PEV
+   49      | SCANF LPAR ID LCOL expr RCOL RPAR PEV
+
+   50 $@6: ε
+
+   51 $@7: ε
+
+   52 if: IF LPAR cond RPAR $@6 bloco $@7 else
+
+   53 else: ELSE bloco
+   54     | ε
+
+   55 bloco: LCHAVE listacomando RCHAVE
+
+   56 declaracao: INT ID PEV
+   57           | INT ID LCOL NUM RCOL PEV
+
+
+Terminais, com as regras onde eles aparecem
+
+    $end (0) 0
+    error (256)
+    ID <str_val> (258) 11 12 13 21 25 47 48 49 56 57
+    ATRIB <str_val> (259) 11 12 47
+    PEV <str_val> (260) 11 12 13 26 27 47 48 49 56 57
+    MAIS <str_val> (261) 13 14
+    DIV <str_val> (262) 17
+    NUM <int_val> (263) 22 23 57
+    LPAR <int_val> (264) 24 26 27 30 43 47 48 49 52
+    RPAR <int_val> (265) 24 26 27 30 43 47 48 49 52
+    LCHAVE <int_val> (266) 55
+    RCHAVE <int_val> (267) 55
+    PRINTF <int_val> (268) 26 27
+    IF <int_val> (269) 52
+    WHILE <int_val> (270) 30
+    FOR <int_val> (271) 47
+    SCANF <int_val> (272) 48 49
+    ELSE <int_val> (273) 53
+    MAIOR <int_val> (274) 38
+    MENOR <int_val> (275) 37
+    IGUAL <int_val> (276) 42
+    MENOS <int_val> (277) 15 23
+    MULT <int_val> (278) 18
+    AND <int_val> (279) 31
+    OR <int_val> (280) 33
+    NOT <int_val> (281) 35
+    DIF <int_val> (282) 41
+    MOD <int_val> (283) 19
+    STRING <str_val> (284) 27
+    LCOL <str_val> (285) 12 25 49 57
+    RCOL <str_val> (286) 12 25 49 57
+    MAIORIGUAL <str_val> (287) 39
+    MENORIGUAL <str_val> (288) 40
+    INT <str_val> (289) 56 57
+
+
+Não terminais com as regras onde eles aparecem
+
+    $accept (35)
+        à esquerda: 0
+    listacomando (36)
+        à esquerda: 1 2
+        à direita: 0 1 55
+    comando (37)
+        à esquerda: 3 4 5 6 7 8 9 10
+        à direita: 1 2
+    atrib (38)
+        à esquerda: 11 12 13
+        à direita: 3
+    expr <int_val> (39)
+        à esquerda: 14 15 16
+        à direita: 11 12 14 15 24 25 26 37 38 39 40 41 42 47 49
+    termo <int_val> (40)
+        à esquerda: 17 18 19 20
+        à direita: 14 15 16 17 18 19
+    fator <int_val> (41)
+        à esquerda: 21 22 23 24 25
+        à direita: 17 18 19 20
+    printf (42)
+        à esquerda: 26 27
+        à direita: 4
+    while (43)
+        à esquerda: 30
+        à direita: 5
+    $@1 (44)
+        à esquerda: 28
+        à direita: 30
+    $@2 (45)
+        à esquerda: 29
+        à direita: 30
+    cond <int_val> (46)
+        à esquerda: 31 32
+        à direita: 30 31 43 47 52
+    condTermo <int_val> (47)
+        à esquerda: 33 34
+        à direita: 31 32 33
+    condFator <int_val> (48)
+        à esquerda: 35 36
+        à direita: 33 34
+    condSimp <int_val> (49)
+        à esquerda: 37 38 39 40 41 42 43
+        à direita: 35 36
+    for (50)
+        à esquerda: 47
+        à direita: 6
+    $@3 (51)
+        à esquerda: 44
+        à direita: 47
+    $@4 (52)
+        à esquerda: 45
+        à direita: 47
+    $@5 (53)
+        à esquerda: 46
+        à direita: 47
+    scanf (54)
+        à esquerda: 48 49
+        à direita: 7
+    if (55)
+        à esquerda: 52
+        à direita: 8
+    $@6 (56)
+        à esquerda: 50
+        à direita: 52
+    $@7 (57)
+        à esquerda: 51
+        à direita: 52
+    else (58)
+        à esquerda: 53 54
+        à direita: 52
+    bloco (59)
+        à esquerda: 55
+        à direita: 9 30 47 52 53
+    declaracao (60)
+        à esquerda: 56 57
+        à direita: 10
+
+
+Estado 0
+
+    0 $accept: • listacomando $end
+
+    ID      deslocar, e ir ao estado 1
+    LCHAVE  deslocar, e ir ao estado 2
+    PRINTF  deslocar, e ir ao estado 3
+    IF      deslocar, e ir ao estado 4
+    WHILE   deslocar, e ir ao estado 5
+    FOR     deslocar, e ir ao estado 6
+    SCANF   deslocar, e ir ao estado 7
+    INT     deslocar, e ir ao estado 8
+
+    listacomando  ir ao estado 9
+    comando       ir ao estado 10
+    atrib         ir ao estado 11
+    printf        ir ao estado 12
+    while         ir ao estado 13
+    for           ir ao estado 14
+    scanf         ir ao estado 15
+    if            ir ao estado 16
+    bloco         ir ao estado 17
+    declaracao    ir ao estado 18
+
+
+Estado 1
+
+   11 atrib: ID • ATRIB expr PEV
+   12      | ID • LCOL expr RCOL ATRIB expr PEV
+   13      | ID • MAIS MAIS PEV
+
+    ATRIB  deslocar, e ir ao estado 19
+    MAIS   deslocar, e ir ao estado 20
+    LCOL   deslocar, e ir ao estado 21
+
+
+Estado 2
+
+   55 bloco: LCHAVE • listacomando RCHAVE
+
+    ID      deslocar, e ir ao estado 1
+    LCHAVE  deslocar, e ir ao estado 2
+    PRINTF  deslocar, e ir ao estado 3
+    IF      deslocar, e ir ao estado 4
+    WHILE   deslocar, e ir ao estado 5
+    FOR     deslocar, e ir ao estado 6
+    SCANF   deslocar, e ir ao estado 7
+    INT     deslocar, e ir ao estado 8
+
+    listacomando  ir ao estado 22
+    comando       ir ao estado 10
+    atrib         ir ao estado 11
+    printf        ir ao estado 12
+    while         ir ao estado 13
+    for           ir ao estado 14
+    scanf         ir ao estado 15
+    if            ir ao estado 16
+    bloco         ir ao estado 17
+    declaracao    ir ao estado 18
+
+
+Estado 3
+
+   26 printf: PRINTF • LPAR expr RPAR PEV
+   27       | PRINTF • LPAR STRING RPAR PEV
+
+    LPAR  deslocar, e ir ao estado 23
+
+
+Estado 4
+
+   52 if: IF • LPAR cond RPAR $@6 bloco $@7 else
+
+    LPAR  deslocar, e ir ao estado 24
+
+
+Estado 5
+
+   30 while: WHILE • $@1 LPAR cond $@2 RPAR bloco
+
+    $padrão  reduzir usando a regra 28 ($@1)
+
+    $@1  ir ao estado 25
+
+
+Estado 6
+
+   47 for: FOR • LPAR ID ATRIB expr $@3 PEV $@4 cond $@5 RPAR bloco
+
+    LPAR  deslocar, e ir ao estado 26
+
+
+Estado 7
+
+   48 scanf: SCANF • LPAR ID RPAR PEV
+   49      | SCANF • LPAR ID LCOL expr RCOL RPAR PEV
+
+    LPAR  deslocar, e ir ao estado 27
+
+
+Estado 8
+
+   56 declaracao: INT • ID PEV
+   57           | INT • ID LCOL NUM RCOL PEV
+
+    ID  deslocar, e ir ao estado 28
+
+
+Estado 9
+
+    0 $accept: listacomando • $end
+
+    $end  deslocar, e ir ao estado 29
+
+
+Estado 10
+
+    1 listacomando: comando • listacomando
+    2             | comando •
+
+    ID      deslocar, e ir ao estado 1
+    LCHAVE  deslocar, e ir ao estado 2
+    PRINTF  deslocar, e ir ao estado 3
+    IF      deslocar, e ir ao estado 4
+    WHILE   deslocar, e ir ao estado 5
+    FOR     deslocar, e ir ao estado 6
+    SCANF   deslocar, e ir ao estado 7
+    INT     deslocar, e ir ao estado 8
+
+    $padrão  reduzir usando a regra 2 (listacomando)
+
+    listacomando  ir ao estado 30
+    comando       ir ao estado 10
+    atrib         ir ao estado 11
+    printf        ir ao estado 12
+    while         ir ao estado 13
+    for           ir ao estado 14
+    scanf         ir ao estado 15
+    if            ir ao estado 16
+    bloco         ir ao estado 17
+    declaracao    ir ao estado 18
+
+
+Estado 11
+
+    3 comando: atrib •
+
+    $padrão  reduzir usando a regra 3 (comando)
+
+
+Estado 12
+
+    4 comando: printf •
+
+    $padrão  reduzir usando a regra 4 (comando)
+
+
+Estado 13
+
+    5 comando: while •
+
+    $padrão  reduzir usando a regra 5 (comando)
+
+
+Estado 14
+
+    6 comando: for •
+
+    $padrão  reduzir usando a regra 6 (comando)
+
+
+Estado 15
+
+    7 comando: scanf •
+
+    $padrão  reduzir usando a regra 7 (comando)
+
+
+Estado 16
+
+    8 comando: if •
+
+    $padrão  reduzir usando a regra 8 (comando)
+
+
+Estado 17
+
+    9 comando: bloco •
+
+    $padrão  reduzir usando a regra 9 (comando)
+
+
+Estado 18
+
+   10 comando: declaracao •
+
+    $padrão  reduzir usando a regra 10 (comando)
+
+
+Estado 19
+
+   11 atrib: ID ATRIB • expr PEV
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 35
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 20
+
+   13 atrib: ID MAIS • MAIS PEV
+
+    MAIS  deslocar, e ir ao estado 38
+
+
+Estado 21
+
+   12 atrib: ID LCOL • expr RCOL ATRIB expr PEV
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 39
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 22
+
+   55 bloco: LCHAVE listacomando • RCHAVE
+
+    RCHAVE  deslocar, e ir ao estado 40
+
+
+Estado 23
+
+   26 printf: PRINTF LPAR • expr RPAR PEV
+   27       | PRINTF LPAR • STRING RPAR PEV
+
+    ID      deslocar, e ir ao estado 31
+    NUM     deslocar, e ir ao estado 32
+    LPAR    deslocar, e ir ao estado 33
+    MENOS   deslocar, e ir ao estado 34
+    STRING  deslocar, e ir ao estado 41
+
+    expr   ir ao estado 42
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 24
+
+   52 if: IF LPAR • cond RPAR $@6 bloco $@7 else
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 45
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    cond       ir ao estado 46
+    condTermo  ir ao estado 47
+    condFator  ir ao estado 48
+    condSimp   ir ao estado 49
+
+
+Estado 25
+
+   30 while: WHILE $@1 • LPAR cond $@2 RPAR bloco
+
+    LPAR  deslocar, e ir ao estado 50
+
+
+Estado 26
+
+   47 for: FOR LPAR • ID ATRIB expr $@3 PEV $@4 cond $@5 RPAR bloco
+
+    ID  deslocar, e ir ao estado 51
+
+
+Estado 27
+
+   48 scanf: SCANF LPAR • ID RPAR PEV
+   49      | SCANF LPAR • ID LCOL expr RCOL RPAR PEV
+
+    ID  deslocar, e ir ao estado 52
+
+
+Estado 28
+
+   56 declaracao: INT ID • PEV
+   57           | INT ID • LCOL NUM RCOL PEV
+
+    PEV   deslocar, e ir ao estado 53
+    LCOL  deslocar, e ir ao estado 54
+
+
+Estado 29
+
+    0 $accept: listacomando $end •
+
+    $padrão  aceitar
+
+
+Estado 30
+
+    1 listacomando: comando listacomando •
+
+    $padrão  reduzir usando a regra 1 (listacomando)
+
+
+Estado 31
+
+   21 fator: ID •
+   25      | ID • LCOL expr RCOL
+
+    LCOL  deslocar, e ir ao estado 55
+
+    $padrão  reduzir usando a regra 21 (fator)
+
+
+Estado 32
+
+   22 fator: NUM •
+
+    $padrão  reduzir usando a regra 22 (fator)
+
+
+Estado 33
+
+   24 fator: LPAR • expr RPAR
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 56
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 34
+
+   23 fator: MENOS • NUM
+
+    NUM  deslocar, e ir ao estado 57
+
+
+Estado 35
+
+   11 atrib: ID ATRIB expr • PEV
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+
+    PEV    deslocar, e ir ao estado 58
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+
+Estado 36
+
+   16 expr: termo •
+   17 termo: termo • DIV fator
+   18      | termo • MULT fator
+   19      | termo • MOD fator
+
+    DIV   deslocar, e ir ao estado 61
+    MULT  deslocar, e ir ao estado 62
+    MOD   deslocar, e ir ao estado 63
+
+    $padrão  reduzir usando a regra 16 (expr)
+
+
+Estado 37
+
+   20 termo: fator •
+
+    $padrão  reduzir usando a regra 20 (termo)
+
+
+Estado 38
+
+   13 atrib: ID MAIS MAIS • PEV
+
+    PEV  deslocar, e ir ao estado 64
+
+
+Estado 39
+
+   12 atrib: ID LCOL expr • RCOL ATRIB expr PEV
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+    RCOL   deslocar, e ir ao estado 65
+
+
+Estado 40
+
+   55 bloco: LCHAVE listacomando RCHAVE •
+
+    $padrão  reduzir usando a regra 55 (bloco)
+
+
+Estado 41
+
+   27 printf: PRINTF LPAR STRING • RPAR PEV
+
+    RPAR  deslocar, e ir ao estado 66
+
+
+Estado 42
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   26 printf: PRINTF LPAR expr • RPAR PEV
+
+    MAIS   deslocar, e ir ao estado 59
+    RPAR   deslocar, e ir ao estado 67
+    MENOS  deslocar, e ir ao estado 60
+
+
+Estado 43
+
+   24 fator: LPAR • expr RPAR
+   43 condSimp: LPAR • cond RPAR
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 68
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    cond       ir ao estado 69
+    condTermo  ir ao estado 47
+    condFator  ir ao estado 48
+    condSimp   ir ao estado 49
+
+
+Estado 44
+
+   35 condFator: NOT • condSimp
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+
+    expr      ir ao estado 45
+    termo     ir ao estado 36
+    fator     ir ao estado 37
+    condSimp  ir ao estado 70
+
+
+Estado 45
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   37 condSimp: expr • MENOR expr
+   38         | expr • MAIOR expr
+   39         | expr • MAIORIGUAL expr
+   40         | expr • MENORIGUAL expr
+   41         | expr • DIF expr
+   42         | expr • IGUAL expr
+
+    MAIS        deslocar, e ir ao estado 59
+    MAIOR       deslocar, e ir ao estado 71
+    MENOR       deslocar, e ir ao estado 72
+    IGUAL       deslocar, e ir ao estado 73
+    MENOS       deslocar, e ir ao estado 60
+    DIF         deslocar, e ir ao estado 74
+    MAIORIGUAL  deslocar, e ir ao estado 75
+    MENORIGUAL  deslocar, e ir ao estado 76
+
+
+Estado 46
+
+   31 cond: cond • AND condTermo
+   52 if: IF LPAR cond • RPAR $@6 bloco $@7 else
+
+    RPAR  deslocar, e ir ao estado 77
+    AND   deslocar, e ir ao estado 78
+
+
+Estado 47
+
+   32 cond: condTermo •
+   33 condTermo: condTermo • OR condFator
+
+    OR  deslocar, e ir ao estado 79
+
+    $padrão  reduzir usando a regra 32 (cond)
+
+
+Estado 48
+
+   34 condTermo: condFator •
+
+    $padrão  reduzir usando a regra 34 (condTermo)
+
+
+Estado 49
+
+   36 condFator: condSimp •
+
+    $padrão  reduzir usando a regra 36 (condFator)
+
+
+Estado 50
+
+   30 while: WHILE $@1 LPAR • cond $@2 RPAR bloco
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 45
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    cond       ir ao estado 80
+    condTermo  ir ao estado 47
+    condFator  ir ao estado 48
+    condSimp   ir ao estado 49
+
+
+Estado 51
+
+   47 for: FOR LPAR ID • ATRIB expr $@3 PEV $@4 cond $@5 RPAR bloco
+
+    ATRIB  deslocar, e ir ao estado 81
+
+
+Estado 52
+
+   48 scanf: SCANF LPAR ID • RPAR PEV
+   49      | SCANF LPAR ID • LCOL expr RCOL RPAR PEV
+
+    RPAR  deslocar, e ir ao estado 82
+    LCOL  deslocar, e ir ao estado 83
+
+
+Estado 53
+
+   56 declaracao: INT ID PEV •
+
+    $padrão  reduzir usando a regra 56 (declaracao)
+
+
+Estado 54
+
+   57 declaracao: INT ID LCOL • NUM RCOL PEV
+
+    NUM  deslocar, e ir ao estado 84
+
+
+Estado 55
+
+   25 fator: ID LCOL • expr RCOL
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 85
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 56
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   24 fator: LPAR expr • RPAR
+
+    MAIS   deslocar, e ir ao estado 59
+    RPAR   deslocar, e ir ao estado 86
+    MENOS  deslocar, e ir ao estado 60
+
+
+Estado 57
+
+   23 fator: MENOS NUM •
+
+    $padrão  reduzir usando a regra 23 (fator)
+
+
+Estado 58
+
+   11 atrib: ID ATRIB expr PEV •
+
+    $padrão  reduzir usando a regra 11 (atrib)
+
+
+Estado 59
+
+   14 expr: expr MAIS • termo
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    termo  ir ao estado 87
+    fator  ir ao estado 37
+
+
+Estado 60
+
+   15 expr: expr MENOS • termo
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    termo  ir ao estado 88
+    fator  ir ao estado 37
+
+
+Estado 61
+
+   17 termo: termo DIV • fator
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    fator  ir ao estado 89
+
+
+Estado 62
+
+   18 termo: termo MULT • fator
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    fator  ir ao estado 90
+
+
+Estado 63
+
+   19 termo: termo MOD • fator
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    fator  ir ao estado 91
+
+
+Estado 64
+
+   13 atrib: ID MAIS MAIS PEV •
+
+    $padrão  reduzir usando a regra 13 (atrib)
+
+
+Estado 65
+
+   12 atrib: ID LCOL expr RCOL • ATRIB expr PEV
+
+    ATRIB  deslocar, e ir ao estado 92
+
+
+Estado 66
+
+   27 printf: PRINTF LPAR STRING RPAR • PEV
+
+    PEV  deslocar, e ir ao estado 93
+
+
+Estado 67
+
+   26 printf: PRINTF LPAR expr RPAR • PEV
+
+    PEV  deslocar, e ir ao estado 94
+
+
+Estado 68
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   24 fator: LPAR expr • RPAR
+   37 condSimp: expr • MENOR expr
+   38         | expr • MAIOR expr
+   39         | expr • MAIORIGUAL expr
+   40         | expr • MENORIGUAL expr
+   41         | expr • DIF expr
+   42         | expr • IGUAL expr
+
+    MAIS        deslocar, e ir ao estado 59
+    RPAR        deslocar, e ir ao estado 86
+    MAIOR       deslocar, e ir ao estado 71
+    MENOR       deslocar, e ir ao estado 72
+    IGUAL       deslocar, e ir ao estado 73
+    MENOS       deslocar, e ir ao estado 60
+    DIF         deslocar, e ir ao estado 74
+    MAIORIGUAL  deslocar, e ir ao estado 75
+    MENORIGUAL  deslocar, e ir ao estado 76
+
+
+Estado 69
+
+   31 cond: cond • AND condTermo
+   43 condSimp: LPAR cond • RPAR
+
+    RPAR  deslocar, e ir ao estado 95
+    AND   deslocar, e ir ao estado 78
+
+
+Estado 70
+
+   35 condFator: NOT condSimp •
+
+    $padrão  reduzir usando a regra 35 (condFator)
+
+
+Estado 71
+
+   38 condSimp: expr MAIOR • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 96
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 72
+
+   37 condSimp: expr MENOR • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 97
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 73
+
+   42 condSimp: expr IGUAL • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 98
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 74
+
+   41 condSimp: expr DIF • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 99
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 75
+
+   39 condSimp: expr MAIORIGUAL • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 100
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 76
+
+   40 condSimp: expr MENORIGUAL • expr
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 101
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 77
+
+   52 if: IF LPAR cond RPAR • $@6 bloco $@7 else
+
+    $padrão  reduzir usando a regra 50 ($@6)
+
+    $@6  ir ao estado 102
+
+
+Estado 78
+
+   31 cond: cond AND • condTermo
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 45
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    condTermo  ir ao estado 103
+    condFator  ir ao estado 48
+    condSimp   ir ao estado 49
+
+
+Estado 79
+
+   33 condTermo: condTermo OR • condFator
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 45
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    condFator  ir ao estado 104
+    condSimp   ir ao estado 49
+
+
+Estado 80
+
+   30 while: WHILE $@1 LPAR cond • $@2 RPAR bloco
+   31 cond: cond • AND condTermo
+
+    AND  deslocar, e ir ao estado 78
+
+    $padrão  reduzir usando a regra 29 ($@2)
+
+    $@2  ir ao estado 105
+
+
+Estado 81
+
+   47 for: FOR LPAR ID ATRIB • expr $@3 PEV $@4 cond $@5 RPAR bloco
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 106
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 82
+
+   48 scanf: SCANF LPAR ID RPAR • PEV
+
+    PEV  deslocar, e ir ao estado 107
+
+
+Estado 83
+
+   49 scanf: SCANF LPAR ID LCOL • expr RCOL RPAR PEV
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 108
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 84
+
+   57 declaracao: INT ID LCOL NUM • RCOL PEV
+
+    RCOL  deslocar, e ir ao estado 109
+
+
+Estado 85
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   25 fator: ID LCOL expr • RCOL
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+    RCOL   deslocar, e ir ao estado 110
+
+
+Estado 86
+
+   24 fator: LPAR expr RPAR •
+
+    $padrão  reduzir usando a regra 24 (fator)
+
+
+Estado 87
+
+   14 expr: expr MAIS termo •
+   17 termo: termo • DIV fator
+   18      | termo • MULT fator
+   19      | termo • MOD fator
+
+    DIV   deslocar, e ir ao estado 61
+    MULT  deslocar, e ir ao estado 62
+    MOD   deslocar, e ir ao estado 63
+
+    $padrão  reduzir usando a regra 14 (expr)
+
+
+Estado 88
+
+   15 expr: expr MENOS termo •
+   17 termo: termo • DIV fator
+   18      | termo • MULT fator
+   19      | termo • MOD fator
+
+    DIV   deslocar, e ir ao estado 61
+    MULT  deslocar, e ir ao estado 62
+    MOD   deslocar, e ir ao estado 63
+
+    $padrão  reduzir usando a regra 15 (expr)
+
+
+Estado 89
+
+   17 termo: termo DIV fator •
+
+    $padrão  reduzir usando a regra 17 (termo)
+
+
+Estado 90
+
+   18 termo: termo MULT fator •
+
+    $padrão  reduzir usando a regra 18 (termo)
+
+
+Estado 91
+
+   19 termo: termo MOD fator •
+
+    $padrão  reduzir usando a regra 19 (termo)
+
+
+Estado 92
+
+   12 atrib: ID LCOL expr RCOL ATRIB • expr PEV
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 33
+    MENOS  deslocar, e ir ao estado 34
+
+    expr   ir ao estado 111
+    termo  ir ao estado 36
+    fator  ir ao estado 37
+
+
+Estado 93
+
+   27 printf: PRINTF LPAR STRING RPAR PEV •
+
+    $padrão  reduzir usando a regra 27 (printf)
+
+
+Estado 94
+
+   26 printf: PRINTF LPAR expr RPAR PEV •
+
+    $padrão  reduzir usando a regra 26 (printf)
+
+
+Estado 95
+
+   43 condSimp: LPAR cond RPAR •
+
+    $padrão  reduzir usando a regra 43 (condSimp)
+
+
+Estado 96
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   38 condSimp: expr MAIOR expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 38 (condSimp)
+
+
+Estado 97
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   37 condSimp: expr MENOR expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 37 (condSimp)
+
+
+Estado 98
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   42 condSimp: expr IGUAL expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 42 (condSimp)
+
+
+Estado 99
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   41 condSimp: expr DIF expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 41 (condSimp)
+
+
+Estado 100
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   39 condSimp: expr MAIORIGUAL expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 39 (condSimp)
+
+
+Estado 101
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   40 condSimp: expr MENORIGUAL expr •
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 40 (condSimp)
+
+
+Estado 102
+
+   52 if: IF LPAR cond RPAR $@6 • bloco $@7 else
+
+    LCHAVE  deslocar, e ir ao estado 2
+
+    bloco  ir ao estado 112
+
+
+Estado 103
+
+   31 cond: cond AND condTermo •
+   33 condTermo: condTermo • OR condFator
+
+    OR  deslocar, e ir ao estado 79
+
+    $padrão  reduzir usando a regra 31 (cond)
+
+
+Estado 104
+
+   33 condTermo: condTermo OR condFator •
+
+    $padrão  reduzir usando a regra 33 (condTermo)
+
+
+Estado 105
+
+   30 while: WHILE $@1 LPAR cond $@2 • RPAR bloco
+
+    RPAR  deslocar, e ir ao estado 113
+
+
+Estado 106
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   47 for: FOR LPAR ID ATRIB expr • $@3 PEV $@4 cond $@5 RPAR bloco
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+    $padrão  reduzir usando a regra 44 ($@3)
+
+    $@3  ir ao estado 114
+
+
+Estado 107
+
+   48 scanf: SCANF LPAR ID RPAR PEV •
+
+    $padrão  reduzir usando a regra 48 (scanf)
+
+
+Estado 108
+
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+   49 scanf: SCANF LPAR ID LCOL expr • RCOL RPAR PEV
+
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+    RCOL   deslocar, e ir ao estado 115
+
+
+Estado 109
+
+   57 declaracao: INT ID LCOL NUM RCOL • PEV
+
+    PEV  deslocar, e ir ao estado 116
+
+
+Estado 110
+
+   25 fator: ID LCOL expr RCOL •
+
+    $padrão  reduzir usando a regra 25 (fator)
+
+
+Estado 111
+
+   12 atrib: ID LCOL expr RCOL ATRIB expr • PEV
+   14 expr: expr • MAIS termo
+   15     | expr • MENOS termo
+
+    PEV    deslocar, e ir ao estado 117
+    MAIS   deslocar, e ir ao estado 59
+    MENOS  deslocar, e ir ao estado 60
+
+
+Estado 112
+
+   52 if: IF LPAR cond RPAR $@6 bloco • $@7 else
+
+    $padrão  reduzir usando a regra 51 ($@7)
+
+    $@7  ir ao estado 118
+
+
+Estado 113
+
+   30 while: WHILE $@1 LPAR cond $@2 RPAR • bloco
+
+    LCHAVE  deslocar, e ir ao estado 2
+
+    bloco  ir ao estado 119
+
+
+Estado 114
+
+   47 for: FOR LPAR ID ATRIB expr $@3 • PEV $@4 cond $@5 RPAR bloco
+
+    PEV  deslocar, e ir ao estado 120
+
+
+Estado 115
+
+   49 scanf: SCANF LPAR ID LCOL expr RCOL • RPAR PEV
+
+    RPAR  deslocar, e ir ao estado 121
+
+
+Estado 116
+
+   57 declaracao: INT ID LCOL NUM RCOL PEV •
+
+    $padrão  reduzir usando a regra 57 (declaracao)
+
+
+Estado 117
+
+   12 atrib: ID LCOL expr RCOL ATRIB expr PEV •
+
+    $padrão  reduzir usando a regra 12 (atrib)
+
+
+Estado 118
+
+   52 if: IF LPAR cond RPAR $@6 bloco $@7 • else
+
+    ELSE  deslocar, e ir ao estado 122
+
+    $padrão  reduzir usando a regra 54 (else)
+
+    else  ir ao estado 123
+
+
+Estado 119
+
+   30 while: WHILE $@1 LPAR cond $@2 RPAR bloco •
+
+    $padrão  reduzir usando a regra 30 (while)
+
+
+Estado 120
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV • $@4 cond $@5 RPAR bloco
+
+    $padrão  reduzir usando a regra 45 ($@4)
+
+    $@4  ir ao estado 124
+
+
+Estado 121
+
+   49 scanf: SCANF LPAR ID LCOL expr RCOL RPAR • PEV
+
+    PEV  deslocar, e ir ao estado 125
+
+
+Estado 122
+
+   53 else: ELSE • bloco
+
+    LCHAVE  deslocar, e ir ao estado 2
+
+    bloco  ir ao estado 126
+
+
+Estado 123
+
+   52 if: IF LPAR cond RPAR $@6 bloco $@7 else •
+
+    $padrão  reduzir usando a regra 52 (if)
+
+
+Estado 124
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 • cond $@5 RPAR bloco
+
+    ID     deslocar, e ir ao estado 31
+    NUM    deslocar, e ir ao estado 32
+    LPAR   deslocar, e ir ao estado 43
+    MENOS  deslocar, e ir ao estado 34
+    NOT    deslocar, e ir ao estado 44
+
+    expr       ir ao estado 45
+    termo      ir ao estado 36
+    fator      ir ao estado 37
+    cond       ir ao estado 127
+    condTermo  ir ao estado 47
+    condFator  ir ao estado 48
+    condSimp   ir ao estado 49
+
+
+Estado 125
+
+   49 scanf: SCANF LPAR ID LCOL expr RCOL RPAR PEV •
+
+    $padrão  reduzir usando a regra 49 (scanf)
+
+
+Estado 126
+
+   53 else: ELSE bloco •
+
+    $padrão  reduzir usando a regra 53 (else)
+
+
+Estado 127
+
+   31 cond: cond • AND condTermo
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 cond • $@5 RPAR bloco
+
+    AND  deslocar, e ir ao estado 78
+
+    $padrão  reduzir usando a regra 46 ($@5)
+
+    $@5  ir ao estado 128
+
+
+Estado 128
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 cond $@5 • RPAR bloco
+
+    RPAR  deslocar, e ir ao estado 129
+
+
+Estado 129
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 cond $@5 RPAR • bloco
+
+    LCHAVE  deslocar, e ir ao estado 2
+
+    bloco  ir ao estado 130
+
+
+Estado 130
+
+   47 for: FOR LPAR ID ATRIB expr $@3 PEV $@4 cond $@5 RPAR bloco •
+
+    $padrão  reduzir usando a regra 47 (for)

@@ -1,0 +1,88 @@
+-------------------------maior de 3 FUNCIONANDO---------------------------------
+int a abacate
+int b abacate
+int c abacate
+ta_se_alimentando_bem(a)abacate
+ta_se_alimentando_bem(b)abacate
+ta_se_alimentando_bem(c)abacate
+ju_ju((a >= b) && (a >= c)) abre_a_chave_bem
+gira_a_roleta_bem("O maior eh: ")abacate
+gira_a_roleta_bem(a)abacate
+gira_a_roleta_bem("\n")abacate
+fecha_a_chave_bem
+lara abre_a_chave_bem
+ju_ju((b>=a) && (b>=c))abre_a_chave_bem
+gira_a_roleta_bem("O maior eh: ")abacate
+gira_a_roleta_bem(b)abacate
+gira_a_roleta_bem("\n")abacate
+fecha_a_chave_bem
+lara abre_a_chave_bem
+gira_a_roleta_bem("O maior eh: ")abacate
+gira_a_roleta_bem(c)abacate
+gira_a_roleta_bem("\n")abacate
+fecha_a_chave_bem
+fecha_a_chave_bem
+
+
+------------------------------------------------------------------------
+
+
+-------------------------positivo e negativo FUNCIONANDO----------------
+int ANA_CATARINA abacate
+gira_a_roleta_bem("Digite um numero:") abacate
+ta_se_alimentando_bem(ANA_CATARINA) abacate
+ju_ju(ANA_CATARINA > 0) abre_a_chave_bem
+gira_a_roleta_bem("O número é positivo") abacate
+fecha_a_chave_bem
+lara abre_a_chave_bem
+gira_a_roleta_bem("O número é negativo") abacate
+fecha_a_chave_bem 
+-------------------------------------------------------------------------
+   
+
+------------------------------fibo FUNCIONANDO---------------------------
+int ult abacate
+int atu abacate
+int prox abacate
+ult = 0 abacate
+atu = 1 abacate
+gira_a_roleta_bem(ult) abacate
+gira_a_roleta_bem("\n") abacate
+coco_bonito (atu <= 10000) abre_a_chave_bem
+gira_a_roleta_bem(atu) abacate
+gira_a_roleta_bem("\n") abacate
+prox = ult + atu abacate
+ult = atu abacate
+atu = prox abacate
+fecha_a_chave_bem
+--------------------------------------------------------------------------
+
+
+
+---------------------------insertion (não funciona)------------------------
+int mingau_de_aveia[1024] abacate int n abacate int i abacate int j abacate
+int aux abacate
+gira_a_roleta_bem("Informe o tamanho do vetor: ") abacate
+ta_se_alimentando_bem(n) abacate
+gira_a_roleta_bem("Informe os valores: ") abacate
+doutor_penico(i = 0 abacate i < (n-1) abacate i+1) abre_a_chave_bem
+ta_se_alimentando_bem(mingau_de_aveia[i]) abacate
+fecha_a_chave_bem
+doutor_penico(i = 1 abacate i < (n-1) abacate i+1) abre_a_chave_bem
+j=i abacate
+coco_bonito ((j > 0) && (mingau_de_aveia[j] < mingau_de_aveia[j - 1])) abre_a_chave_bem
+aux =  mingau_de_aveia[j] abacate
+mingau_de_aveia[j]= mingau_de_aveia[j - 1] abacate
+mingau_de_aveia[j - 1] = aux abacate 
+j = j - 1 abacate
+fecha_a_chave_bem
+fecha_a_chave_bem
+gira_a_roleta_bem("Vetor ordenado: ") abacate
+doutor_penico(i=0 abacate i < (n-1) abacate i+1) abre_a_chave_bem
+gira_a_roleta_bem(mingau_de_aveia[i]) abacate
+fecha_a_chave_bem
+
+
+int mingau_de_aveia[1024] abacate int n abacate int i abacate int j abacate int aux abacate gira_a_roleta_bem("Informe o tamanho do vetor: ") abacate ta_se_alimentando_bem(n) abacate gira_a_roleta_bem("Informe os valores: ") abacate doutor_penico(i = 0 abacate i <= n-1) abre_a_chave_bem ta_se_alimentando_bem(mingau_de_aveia[i]) abacate i++ abacate fecha_a_chave_bem doutor_penico(i = 1 abacate i <= n-1 ) abre_a_chave_bem j=i abacate i++ abacate coco_bonito ((j > 0) && (mingau_de_aveia[j] < mingau_de_aveia[j - 1])) abre_a_chave_bem aux =  mingau_de_aveia[j] abacate mingau_de_aveia[j]= mingau_de_aveia[j - 1] abacate mingau_de_aveia[j - 1] = aux abacate j = j - 1 abacate fecha_a_chave_bem fecha_a_chave_bem gira_a_roleta_bem("Vetor ordenado: ") abacate doutor_penico(i=0 abacate i <= n-1) abre_a_chave_bem gira_a_roleta_bem(mingau_de_aveia[i]) abacate  i++ abacate gira_a_roleta_bem(" ") abacate fecha_a_chave_bem
+
+-----------------------------------------------------------------------------

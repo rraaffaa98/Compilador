@@ -1,0 +1,37 @@
+read %r0
+read %r1
+read %r2
+mov %t0, %r0
+mov %t1, %r1
+greatereq %t2, %t0, %t1
+mov %t3, %r0
+mov %t4, %r2
+greatereq %t5, %t3, %t4
+and %t6, %t2, %t5
+jf %t6, L0
+printf "O maior eh: "
+mov %t7, %r0
+printv %t7
+printf "\n"
+jump L1
+label L0
+mov %t8, %r1
+mov %t9, %r0
+greatereq %t10, %t8, %t9
+mov %t11, %r1
+mov %t12, %r2
+greatereq %t13, %t11, %t12
+and %t14, %t10, %t13
+jf %t14, L2
+printf "O maior eh: "
+mov %t15, %r1
+printv %t15
+printf "\n"
+jump L3
+label L2
+printf "O maior eh: "
+mov %t16, %r2
+printv %t16
+printf "\n"
+label L3
+label L1

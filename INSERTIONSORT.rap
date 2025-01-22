@@ -1,0 +1,82 @@
+printf "Informe o tamanho do vetor: "
+read %r1024
+printf "Informe os valores: "
+mov %t0, 0
+mov %r1025, %t0
+label L0
+mov %t1, %r1025
+mov %t2, %r1024
+mov %t3, 1
+sub %t4, %t2, %t3
+lesseq %t5, %t1, %t4
+jf %t5, L1
+mov %t6, %r1025
+read %t7
+store %t7, %t6(0)
+add %r1025, %r1025, 1
+jump L0
+label L1
+mov %t7, 1
+mov %r1025, %t7
+label L2
+mov %t8, %r1025
+mov %t9, %r1024
+mov %t10, 1
+sub %t11, %t9, %t10
+lesseq %t12, %t8, %t11
+jf %t12, L3
+mov %t13, %r1025
+mov %r1026, %t13
+add %r1025, %r1025, 1
+label L4
+mov %t14, %r1026
+mov %t15, 0
+greater %t16, %t14, %t15
+mov %t17, %r1026
+load %t18, %t17(0)
+mov %t19, %r1026
+mov %t20, 1
+sub %t21, %t19, %t20
+load %t22, %t21(0)
+less %t23, %t18, %t22
+and %t24, %t16, %t23
+jf %t24, L5
+mov %t25, %r1026
+load %t26, %t25(0)
+mov %r1027, %t26
+mov %t27, %r1026
+mov %t28, %r1026
+mov %t29, 1
+sub %t30, %t28, %t29
+load %t31, %t30(0)
+store %t31, %t27(0)
+mov %t32, %r1026
+mov %t33, 1
+sub %t34, %t32, %t33
+mov %t35, %r1027
+store %t35, %t34(0)
+mov %t36, %r1026
+mov %t37, 1
+sub %t38, %t36, %t37
+mov %r1026, %t38
+jump L4
+label L5
+jump L2
+label L3
+printf "Vetor ordenado: "
+mov %t39, 0
+mov %r1025, %t39
+label L6
+mov %t40, %r1025
+mov %t41, %r1024
+mov %t42, 1
+sub %t43, %t41, %t42
+lesseq %t44, %t40, %t43
+jf %t44, L7
+mov %t45, %r1025
+load %t46, %t45(0)
+printv %t46
+add %r1025, %r1025, 1
+printf " "
+jump L6
+label L7

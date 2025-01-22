@@ -1,0 +1,25 @@
+mov %t0, 0
+mov %r0, %t0
+mov %t1, 1
+mov %r1, %t1
+mov %t2, %r0
+printv %t2
+printf "\n"
+label L0
+mov %t3, %r1
+mov %t4, 10000
+lesseq %t5, %t3, %t4
+jf %t5, L1
+mov %t6, %r1
+printv %t6
+printf "\n"
+mov %t7, %r0
+mov %t8, %r1
+add %t9, %t7, %t8
+mov %r2, %t9
+mov %t10, %r1
+mov %r0, %t10
+mov %t11, %r2
+mov %r1, %t11
+jump L0
+label L1

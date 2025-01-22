@@ -1,0 +1,13 @@
+mov %t0, 0
+mov %r0, %t0
+mov %t1, %r0
+mov %t2, 1
+greatereq %t3, %t1, %t2
+jf %t3, L0
+printf "certo"
+printf "\n"
+jump L1
+label L0
+label L1
+printf "errado"
+
